@@ -1,0 +1,84 @@
+import React, { useEffect } from "react";
+import { useNavigate, Outlet } from "react-router-dom";
+
+const DashboardLayout = () => {
+  const navigate = useNavigate();
+  const username = localStorage.getItem("username");
+  const role = localStorage.getItem("roles");
+  const token = localStorage.getItem("token");
+
+  console.log("Role from storage",role);
+
+
+  // Normalize role → always array
+ // ✅ Normalize roles properly
+  let normalizedRoles = [];
+  if (role) {
+    try {
+      normalizedRoles = JSON.parse(role); // e.g. ["ROLE_USER"]
+    } catch {
+      normalizedRoles = [role.trim()]; // fallback if not JSON
+    }
+  }
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
+
+  const profileDetails = () => {
+    navigate("/profile-details");
+  };
+
+  const goToDashboard = () => {
+    if (!normalizedRoles.length) return;
+
+    console.log("Normalized roles:", normalizedRoles);
+
+    if (normalizedRoles.includes("ROLE_ADMIN")) {
+      navigate("/admin-dashboard");
+    } else if (normalizedRoles.includes("ROLE_MODERATOR")) {
+      navigate("/mod-dashboard");
+    } else if (normalizedRoles.includes("ROLE_USER")) {
+      navigate("/user-dashboard");
+    } else {
+      navigate("/unauthorized");
+    }
+  };
+
+  return (
+    <div>
+      {/* Header */}
+      <header className="navbar navbar-dark bg-dark px-3">
+        <span
+          className="navbar-brand mb-0 h1"
+          style={{ cursor: "pointer" }}
+          onClick={goToDashboard}
+        >
+          Todo App - Dashboard
+        </span>
+        <div className="d-flex align-items-center">
+          <span className="text-light me-3">Hello, {username}</span>
+          <button className="btn btn-outline-light btn-sm" onClick={profileDetails}>
+            Profile
+          </button>
+          <button
+            className="btn btn-outline-light btn-sm"
+            style={{ marginLeft: "5px" }}
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
+        </div>
+      </header>
+
+      {/* Page Content */}
+      <main className="container mt-4">
+        {/* All nested routes render here */}
+        <Outlet />
+      </main>
+    </div>
+  );
+};
+
+export default DashboardLayout;

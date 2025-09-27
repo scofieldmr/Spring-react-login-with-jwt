@@ -1,23 +1,21 @@
-import React, { useEffect } from "react";
-import { useNavigate, Outlet } from "react-router-dom";
+import React from "react";
+import { useNavigate, Outlet, useLocation } from "react-router-dom";
 
 const DashboardLayout = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
   const username = localStorage.getItem("username");
   const role = localStorage.getItem("roles");
   const token = localStorage.getItem("token");
 
-  console.log("Role from storage",role);
-
-
-  // Normalize role → always array
- // ✅ Normalize roles properly
+  // Normalize roles
   let normalizedRoles = [];
   if (role) {
     try {
       normalizedRoles = JSON.parse(role); // e.g. ["ROLE_USER"]
     } catch {
-      normalizedRoles = [role.trim()]; // fallback if not JSON
+      normalizedRoles = [role.trim()];
     }
   }
 
@@ -31,10 +29,13 @@ const DashboardLayout = () => {
   };
 
   const goToDashboard = () => {
-    if (!normalizedRoles.length) return;
+    // If user not logged in → go to login
+    if (!token) {
+      navigate("/login");
+      return;
+    }
 
-    console.log("Normalized roles:", normalizedRoles);
-
+    // Logged in → go to role-based dashboard
     if (normalizedRoles.includes("ROLE_ADMIN")) {
       navigate("/admin-dashboard");
     } else if (normalizedRoles.includes("ROLE_MODERATOR")) {
@@ -45,6 +46,10 @@ const DashboardLayout = () => {
       navigate("/unauthorized");
     }
   };
+
+  // Check if we are currently on login or signup page
+  const isAuthPage =
+    location.pathname === "/login" || location.pathname === "/signup";
 
   return (
     <div>
@@ -57,24 +62,31 @@ const DashboardLayout = () => {
         >
           Todo App - Dashboard
         </span>
+
         <div className="d-flex align-items-center">
-          <span className="text-light me-3">Hello, {username}</span>
-          <button className="btn btn-outline-light btn-sm" onClick={profileDetails}>
-            Profile
-          </button>
-          <button
-            className="btn btn-outline-light btn-sm"
-            style={{ marginLeft: "5px" }}
-            onClick={handleLogout}
-          >
-            Logout
-          </button>
+          {!isAuthPage && token ? (
+            <>
+              <span className="text-light me-3">Hello, {username}</span>
+              <button
+                className="btn btn-outline-light btn-sm"
+                onClick={profileDetails}
+              >
+                Profile
+              </button>
+              <button
+                className="btn btn-outline-light btn-sm"
+                style={{ marginLeft: "5px" }}
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            </>
+          ) : null}
         </div>
       </header>
 
       {/* Page Content */}
       <main className="container mt-4">
-        {/* All nested routes render here */}
         <Outlet />
       </main>
     </div>
@@ -82,3 +94,4 @@ const DashboardLayout = () => {
 };
 
 export default DashboardLayout;
+

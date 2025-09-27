@@ -1,6 +1,6 @@
 import './App.css'
 import { Navigate } from 'react-router-dom'
-import { BrowserRouter, Routes, Route , Router} from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Router } from 'react-router-dom'
 import LoginPage from './common/LoginPage'
 import AdminDashboard from './components/AdminDashboard'
 import SignupPage from './common/SignupPage'
@@ -21,35 +21,34 @@ function App() {
   return (
     <>
       <BrowserRouter>
-
-      <Routes>
-        {/* Default route → Login */}
-        <Route path="/" element={<Navigate to="/login" replace />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage />} />
-
-        {/* Protected Routes */}
-        <Route element={<ProtectedRoute />}>
+        <Routes>
           <Route element={<DashboardLayout />}>
-            <Route path="/user-dashboard" element={<UserDashboard />} />
-            <Route path="/mod-dashboard" element={<ModDashboard />} />
-            <Route path="/admin-dashboard" element={<AdminDashboard />} />
-            <Route path="/profile-details" element={<ProfileDetails />} />
-          </Route>
-        </Route>
+            {/* Public pages */}
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
+            <Route path='/email-verify' element={<EmailVerify />} />
+            <Route path='/otp-verify' element={<OTPVerify />} />
+            <Route path='/change-password' element={<ChangePassword />} />
+            <Route path='/reset-password' element={<ResetPassword />} />
 
-        {/* Unauthorized */}
-        <Route path="/unauthorized" element={<h2>Unauthorized Access 🚫</h2>} />
+            {/* Protected routes */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="/user-dashboard" element={<UserDashboard />} />
+              <Route path="/mod-dashboard" element={<ModDashboard />} />
+              <Route path="/admin-dashboard" element={<AdminDashboard />} />
+              <Route path="/profile-details" element={<ProfileDetails />} />
+            </Route>
+            </Route>
 
-        <Route path='/email-verify' element={<EmailVerify/>}/>
+                      {/* Default route → Login */}
+             <Route path="/" element={<Navigate to="/login" replace />} />
 
-        <Route path='/otp-verify' element={<OTPVerify/>}/>
+            {/* Unauthorized */}
+            <Route path="/unauthorized" element={<h2>Unauthorized Access 🚫</h2>} />
 
-        <Route path='/change-password' element={<ChangePassword/>}/>
-
-        <Route path='/reset-password' element={<ResetPassword/>}/>
-      </Routes>
-    </BrowserRouter>
+           
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }

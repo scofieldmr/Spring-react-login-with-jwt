@@ -122,55 +122,55 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="login-container d-flex justify-content-center align-items-center vh-100">
-       <div className="card shadow-lg p-4 login-card">
-      <h2 className="text-center">Login Page</h2>
+    <div className="d-flex justify-content-center align-items-center">
+      <div className="card shadow-lg p-4 login-card">
+        <h2 className="text-center">Login Page</h2>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="username"
-          placeholder="Email / Username"
-          value={username}
-          className={`form-control mt-3 ${formError.username || apiError ? "is-invalid" : ""}`}
-          onChange={(e) => setUsername(e.target.value)}>
-        </input>
-        {formError.username && <div className="invalid-feedback">{formError.username}</div>}
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="username"
+            placeholder="Email / Username"
+            value={username}
+            className={`form-control mt-3 ${formError.username || apiError ? "is-invalid" : ""}`}
+            onChange={(e) => setUsername(e.target.value)}>
+          </input>
+          {formError.username && <div className="invalid-feedback">{formError.username}</div>}
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={password}
-          className={`form-control mt-3 ${formError.password || apiError ? "is-invalid" : ""}`}
-          onChange={(e) => setPassword(e.target.value)}>
-        </input>
-        {formError.password && <div className="invalid-feedback"> {formError.password}</div>}
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={password}
+            className={`form-control mt-3 ${formError.password || apiError ? "is-invalid" : ""}`}
+            onChange={(e) => setPassword(e.target.value)}>
+          </input>
+          {formError.password && <div className="invalid-feedback"> {formError.password}</div>}
 
-        {apiError && <div className="text-danger mt-2">{apiError}</div>}
+          {apiError && <div className="text-danger mt-2">{apiError}</div>}
 
-        <div>
-          <button className="btn btn-success mt-3 w-100" type="submit">Login</button>
+          <div>
+            <button className="btn btn-success mt-3 w-100" type="submit">Login</button>
+          </div>
+        </form>
+
+        {/* Signup link */}
+        <div className="text-center mt-3">
+          <p>
+            Don’t have an account ?
+            <Link to="/signup" className="btn btn-link">
+              Sign up here
+            </Link>
+          </p>
         </div>
-      </form>
 
-      {/* Signup link */}
-      <div className="text-center mt-3">
-        <p>
-          Don’t have an account ?
-          <Link to="/signup" className="btn btn-link">
-            Sign up here
-          </Link>
-        </p>
-      </div>
-
-      <div className="text-center mb-3">
-        <p>
-          <Link to="/email-verify" className="btn btn-link" >
-            Forgot Password?
-          </Link>
-        </p>
-      </div>
+        <div className="text-center mb-3">
+          <p>
+            <Link to="/email-verify" className="btn btn-link" >
+              Forgot Password?
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );

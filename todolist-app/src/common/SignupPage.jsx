@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 
 const SignupPage = () => {
   const navigate = useNavigate();
@@ -25,6 +26,29 @@ const SignupPage = () => {
   const [apiError, setApiError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [message, setMessage] = useState("");
+
+  const GOOGLE_CLIENT_ID = "423631960746-2ba77hq07l5cbia2kvs5ica8gf3vc3fh.apps.googleusercontent.com";
+
+    // Google onSuccess handler
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      // credentialResponse.credential is an ID token (JWT)
+      const idToken = credentialResponse.credential;
+      // send to backend to verify and receive your app JWT
+      const res = await axios.post("http://localhost:8000/api/v1/oauth/google", { credential: idToken });
+      const token = res.data.token;
+      localStorage.setItem("token", token);
+      // navigate
+      navigate("/dashboard");
+    } catch (err) {
+      console.error(err);
+      alert("Google login failed");
+    }
+  };
+
+  const handleGoogleFailure = () => {
+    alert("Google sign-in failed");
+  };
 
   function validateField(name, value) {
   let error = "";
@@ -206,9 +230,13 @@ const SignupPage = () => {
           <button className="btn btn-primary mt-3 w-100" type="submit">Sign Up</button>
         </form>
 
-        <div className="oauth-signup">
-         <button className="btn btn-primary mt-3"> Sign up Using Gmail</button>
-         <button className="btn btn-primary mt-3 ms-4">Sign up Using Github</button>
+        <div className="mt-3">
+         <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={handleGoogleFailure}
+            />
+          </GoogleOAuthProvider>
       </div>
       </div>
 

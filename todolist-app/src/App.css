@@ -23,9 +23,7 @@
 
 /* Login Page Styles */
 /* Full-page background */
-.login-container {
-  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 1.5rem);
-}
+
 
 /* Card styling */
 .login-card {
@@ -34,9 +32,6 @@
   border-radius: 15px;
 }
 
-.signup-container {
-  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 120%);
-}
 
 /* 
 import React, { useEffect } from "react";

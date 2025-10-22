@@ -29,15 +29,11 @@ import java.util.Map;
 @Service
 public class OAuthServiceImp implements OAuthUserService{
 
-    @Value("${oauth.google.client-id}")
-    private String googleClientId;
-
     private final UserRepository userRepository;
 
     public OAuthServiceImp(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-
 
     @Override
     public SignupResponse createOrGetOAuthUser(OAuthUserDto oauthUserDto) {

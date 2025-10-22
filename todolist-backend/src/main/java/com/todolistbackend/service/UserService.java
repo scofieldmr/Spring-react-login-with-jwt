@@ -1,7 +1,6 @@
 package com.todolistbackend.service;
 
 import com.todolistbackend.dto.*;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 public interface UserService {
 

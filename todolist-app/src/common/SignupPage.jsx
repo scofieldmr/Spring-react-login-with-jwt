@@ -128,7 +128,7 @@ const SignupPage = () => {
       setMessage(res.data.message || "Signup successful!");
       setTimeout(() => navigate("/login"), 1000); // redirect to login
     } catch (err) {
-      setError(err.response?.data?.message || "Signup failed");
+      setApiError(err.response?.data?.message || "Signup failed");
     }
   };
 

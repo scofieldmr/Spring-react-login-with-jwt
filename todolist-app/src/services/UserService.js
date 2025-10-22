@@ -1,4 +1,6 @@
 import axios from "axios";
 
-export const logUserInApplication = (user) => axios.post('http://localhost:8000/api/v1/jwtlogin',user);
+const REACT_APP_API_URL = "https://spring-login-backend.onrender.com/api/v1";
+
+export const logUserInApplication = (user) => axios.post(`${REACT_APP_API_URL}/jwtlogin`,user);
 

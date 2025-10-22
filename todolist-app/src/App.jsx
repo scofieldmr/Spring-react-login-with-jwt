@@ -44,6 +44,8 @@ function App() {
           {/* Default route → Login */}
           <Route path="/" element={<Navigate to="/login" replace />} />
 
+          <Route path="/login" element={<Navigate to="/login" replace />} />
+
           {/* Unauthorized */}
           <Route path="/unauthorized" element={<h2>Unauthorized Access 🚫</h2>} />
 

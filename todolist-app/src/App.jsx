@@ -22,31 +22,30 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route element={<DashboardLayout />}>
-            {/* Public pages */}
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignupPage />} />
-            <Route path='/email-verify' element={<EmailVerify />} />
-            <Route path='/otp-verify' element={<OTPVerify />} />
-            <Route path='/change-password' element={<ChangePassword />} />
-            <Route path='/reset-password' element={<ResetPassword />} />
 
-            {/* Protected routes */}
-            <Route element={<ProtectedRoute />}>
+          {/* Public routes */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path='/email-verify' element={<EmailVerify />} />
+          <Route path='/otp-verify' element={<OTPVerify />} />
+          <Route path='/change-password' element={<ChangePassword />} />
+          <Route path='/reset-password' element={<ResetPassword />} />
+
+          {/* Protected layout */}
+          <Route element={<ProtectedRoute />}>
+            <Route element={<DashboardLayout />}>
               <Route path="/user-dashboard" element={<UserDashboard />} />
               <Route path="/mod-dashboard" element={<ModDashboard />} />
               <Route path="/admin-dashboard" element={<AdminDashboard />} />
               <Route path="/profile-details" element={<ProfileDetails />} />
             </Route>
-            </Route>
+          </Route>
 
-                      {/* Default route → Login */}
-             <Route path="/" element={<Navigate to="/login" replace />} />
+          {/* Redirect root to login */}
+          <Route path="/" element={<Navigate to="/login" replace />} />
 
-            {/* Unauthorized */}
-            <Route path="/unauthorized" element={<h2>Unauthorized Access 🚫</h2>} />
+          <Route path="/unauthorized" element={<h2>Unauthorized Access 🚫</h2>} />
 
-           
         </Routes>
       </BrowserRouter>
     </>

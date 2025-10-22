@@ -14,7 +14,7 @@ const SignupPage = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [role, setRole] = useState("");
 
-  const REACT_APP_API_URL= "https://spring-login-backend.onrender.com/api/v1";
+  const REACT_APP_API_URL = "https://spring-login-backend.onrender.com/api/v1";
 
   const LOCAL_HOST = "http://localhost:8000/api/v1/";
 
@@ -32,20 +32,20 @@ const SignupPage = () => {
   const [message, setMessage] = useState("");
 
   function validateField(name, value) {
-  let error = "";
+    let error = "";
 
-  if (name === "email") {
-    if (!value.trim()) error = "Email Required !";
-    else {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(value)) {
-        error = "Enter a valid email address!";
+    if (name === "email") {
+      if (!value.trim()) error = "Email Required !";
+      else {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) {
+          error = "Enter a valid email address!";
+        }
       }
     }
-  }
 
-  setFormError((prev) => ({ ...prev, [name]: error }));
-}
+    setFormError((prev) => ({ ...prev, [name]: error }));
+  }
 
   function validateForm() {
     let valid = true;
@@ -87,15 +87,15 @@ const SignupPage = () => {
     }
 
     if (!confirmPassword.trim()) {
-            errorCopy.confirmPassword = "Repeat Current Password Required";
-            valid = false;
-        }
-        else {
-            if (confirmPassword && !passwordRegex.test(confirmPassword)) {
-                errorCopy.confirmPassword = "Password should be 4 to 10 characters long";
-                valid = false;
-            }
-        }
+      errorCopy.confirmPassword = "Repeat Current Password Required";
+      valid = false;
+    }
+    else {
+      if (confirmPassword && !passwordRegex.test(confirmPassword)) {
+        errorCopy.confirmPassword = "Password should be 4 to 10 characters long";
+        valid = false;
+      }
+    }
 
     if (!role.trim()) {
       errorCopy.role = "Role Required !";
@@ -108,7 +108,7 @@ const SignupPage = () => {
 
   const handleRepeatChange = (value) => {
     setConfirmPassword(value);
-    if (password && value && confirmPassword !== value) {
+    if (password && value && password !== value) {
       setPasswordError("Passwords do not match");
     } else {
       setPasswordError("");
@@ -117,20 +117,24 @@ const SignupPage = () => {
 
 
   const handleSubmit = async (e) => {
-    const formData = {firstName,lastName,email,password,confirmPassword,role};
+    const formData = { firstName, lastName, email, password, confirmPassword, role };
 
     e.preventDefault();
     setApiError("");
     setMessage("");
 
-    if(!validateForm()){
+    if (!validateForm()) {
       return;
     }
 
     try {
       const res = await axios.post(`${REACT_APP_API_URL}/signup`, formData);
-      setMessage(res.data.message || "Signup successful!");
-      setTimeout(() => navigate("/login"), 1000); // redirect to login
+      if (res.status === 200) {
+        setMessage(res.data.message || "Signup successful!");
+        setTimeout(() => navigate("/login"), 1000);
+      } else {
+        setApiError(res.data.message || "Signup failed");
+      }
     } catch (err) {
       setApiError(err.response?.data?.message || "Signup failed");
     }
@@ -162,43 +166,44 @@ const SignupPage = () => {
 
           {formError.lastName && <div className="invalid-feedback">{formError.lastName}</div>}
 
-          <input 
+          <input
             type="email"
             name="email"
             placeholder="Email"
             value={email}
-            className={`form-control mt-3 ${formError.email || apiError ? 'is-invalid' :''}`}
-            onChange={(e) =>{ setEmail(e.target.value),
-               validateField("email", e.target.value); 
-            }}/>
+            className={`form-control mt-3 ${formError.email || apiError ? 'is-invalid' : ''}`}
+            onChange={(e) => {
+              setEmail(e.target.value),
+              validateField("email", e.target.value);
+            }} />
 
-            {formError.email && <div className="invalid-feedback">{formError.email}</div>}
+          {formError.email && <div className="invalid-feedback">{formError.email}</div>}
 
           <input
             type="password"
             name="password"
             placeholder="Password with 4 - 10 characters"
             value={password}
-            className={`form-control mt-3 ${formError.password || apiError ? 'is-invalid': ''}`}
+            className={`form-control mt-3 ${formError.password || apiError ? 'is-invalid' : ''}`}
             onChange={(e) => setPassword(e.target.value)} />
 
-            {formError.password && <div className="invalid-feedback">{formError.password}</div>}
+          {formError.password && <div className="invalid-feedback">{formError.password}</div>}
 
-          <input 
+          <input
             type="password"
             name="confirmPassword"
             placeholder="Confirm Password"
             value={confirmPassword}
-            className={`form-control mt-3 ${formError.confirmPassword || apiError ? 'is-invalid': ''}`}
+            className={`form-control mt-3 ${formError.confirmPassword || apiError ? 'is-invalid' : ''}`}
             onChange={(e) => handleRepeatChange(e.target.value)} />
 
-            {formError.confirmPassword && <div className="invalid-feedback">{formError.confirmPassword}</div>}
+          {formError.confirmPassword && <div className="invalid-feedback">{formError.confirmPassword}</div>}
 
           <select
-           name="role"
-           value={role}
-           className={`form-control mt-3 ${formError.role || apiError ? 'is-invalid':''}`}
-           onChange={(e) => setRole(e.target.value)}
+            name="role"
+            value={role}
+            className={`form-control mt-3 ${formError.role || apiError ? 'is-invalid' : ''}`}
+            onChange={(e) => setRole(e.target.value)}
           >
             <option value="">---SELECT ROLE---</option>
             <option value="ADMIN">ADMIN</option>
@@ -210,11 +215,6 @@ const SignupPage = () => {
 
           <button className="btn btn-primary mt-3 w-100" type="submit">Sign Up</button>
         </form>
-
-        <div className="mt-3">
-         <GoogleOAuthProvider>
-          </GoogleOAuthProvider>
-      </div>
       </div>
 
     </div>

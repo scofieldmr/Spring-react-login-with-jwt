@@ -130,8 +130,9 @@ const SignupPage = () => {
     try {
       const res = await axios.post(`${REACT_APP_API_URL}/signup`, formData);
       if (res.status === 201 || res.status === 200) {
+        navigate("/login");
         setMessage(res.data.message || "Signup successful!");
-        setTimeout(() => navigate("/login"), 1000);
+        console.log("Signup response:", res);
       } else {
         setApiError(res.data.message || "Signup failed");
       }

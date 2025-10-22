@@ -82,7 +82,11 @@ public class SecurityConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/**")
-                        .allowedOrigins("http://spring-react-login-with-jwt.onrender.com/")
+                        .allowedOrigins(
+                                "http://localhost:5173",
+                                "http://localhost:3000",
+                                "https://spring-react-login-with-jwt.onrender.com"
+                        )
                         .allowedMethods("GET", "POST", "PUT", "DELETE");
             }
         };

@@ -14,6 +14,10 @@ const SignupPage = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [role, setRole] = useState("");
 
+  const REACT_APP_API_URL= "https://spring-login-backend.onrender.com/api/v1";
+
+  const LOCAL_HOST = "http://localhost:8000/api/v1/";
+
   const [formError, setFormError] = useState({
     firstName: "",
     lastName: "",
@@ -124,7 +128,7 @@ const SignupPage = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:8000/api/v1/signup", formData);
+      const res = await axios.post(`${REACT_APP_API_URL}/signup`, formData);
       setMessage(res.data.message || "Signup successful!");
       setTimeout(() => navigate("/login"), 1000); // redirect to login
     } catch (err) {

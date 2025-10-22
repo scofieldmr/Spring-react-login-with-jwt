@@ -1,4 +1,4 @@
-package com.todolistbackend.service;
+package com.todolistbackend.OAuth.service;
 
 import com.todolistbackend.OAuth.dto.OAuthResponseDto;
 import com.todolistbackend.OAuth.dto.OAuthUserDto;

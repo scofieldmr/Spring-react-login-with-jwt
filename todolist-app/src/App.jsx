@@ -25,7 +25,7 @@ function App() {
         <Routes>
           <Route element={<DashboardLayout />}>
             {/* Public pages */}
-            <Route path="/login" basename= "/" element={<LoginPage />} />
+            <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route path='/email-verify' element={<EmailVerify />} />
             <Route path='/otp-verify' element={<OTPVerify />} />

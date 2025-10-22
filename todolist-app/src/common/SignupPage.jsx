@@ -27,29 +27,6 @@ const SignupPage = () => {
   const [passwordError, setPasswordError] = useState("");
   const [message, setMessage] = useState("");
 
-  const GOOGLE_CLIENT_ID = "423631960746-2ba77hq07l5cbia2kvs5ica8gf3vc3fh.apps.googleusercontent.com";
-
-    // Google onSuccess handler
-  const handleGoogleSuccess = async (credentialResponse) => {
-    try {
-      // credentialResponse.credential is an ID token (JWT)
-      const idToken = credentialResponse.credential;
-      // send to backend to verify and receive your app JWT
-      const res = await axios.post("http://localhost:8000/api/v1/oauth/google", { credential: idToken });
-      const token = res.data.token;
-      localStorage.setItem("token", token);
-      // navigate
-      navigate("/dashboard");
-    } catch (err) {
-      console.error(err);
-      alert("Google login failed");
-    }
-  };
-
-  const handleGoogleFailure = () => {
-    alert("Google sign-in failed");
-  };
-
   function validateField(name, value) {
   let error = "";
 
@@ -231,11 +208,7 @@ const SignupPage = () => {
         </form>
 
         <div className="mt-3">
-         <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-            <GoogleLogin
-              onSuccess={handleGoogleSuccess}
-              onError={handleGoogleFailure}
-            />
+         <GoogleOAuthProvider>
           </GoogleOAuthProvider>
       </div>
       </div>

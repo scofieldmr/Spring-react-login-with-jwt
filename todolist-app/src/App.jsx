@@ -21,10 +21,11 @@ function App() {
   return (
     <>
       <BrowserRouter>
+
         <Routes>
           <Route element={<DashboardLayout />}>
             {/* Public pages */}
-            <Route path="/login" element={<LoginPage />} />
+            <Route path="/login" basename= "/" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route path='/email-verify' element={<EmailVerify />} />
             <Route path='/otp-verify' element={<OTPVerify />} />
@@ -38,15 +39,15 @@ function App() {
               <Route path="/admin-dashboard" element={<AdminDashboard />} />
               <Route path="/profile-details" element={<ProfileDetails />} />
             </Route>
-            </Route>
+          </Route>
 
-                      {/* Default route → Login */}
-             <Route path="/" element={<Navigate to="/login" replace />} />
+          {/* Default route → Login */}
+          <Route path="/" element={<Navigate to="/login" replace />} />
 
-            {/* Unauthorized */}
-            <Route path="/unauthorized" element={<h2>Unauthorized Access 🚫</h2>} />
+          {/* Unauthorized */}
+          <Route path="/unauthorized" element={<h2>Unauthorized Access 🚫</h2>} />
 
-           
+
         </Routes>
       </BrowserRouter>
     </>

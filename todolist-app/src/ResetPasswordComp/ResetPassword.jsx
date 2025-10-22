@@ -11,6 +11,10 @@ const ResetPassword = () => {
     const email = localStorage.getItem("username");
     const token = localStorage.getItem("token");
 
+    const REACT_APP_API_URL = "https://spring-login-backend.onrender.com/api/v1";
+
+    const LOCAL_HOST = "http://localhost:8000/api/v1/";
+
 
     const [formError, setFormError] = useState({
         currentPassword: "",
@@ -96,7 +100,7 @@ const ResetPassword = () => {
             console.log(resetPass);
 
             const res = await axios.post(
-                `http://localhost:8000/api/v1/resetPassword/`,resetPass,
+                `${REACT_APP_API_URL}/resetPassword/`,resetPass,
                 { 
                   headers: { 
                     Authorization: `Bearer ${token}`,

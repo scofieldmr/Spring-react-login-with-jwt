@@ -19,6 +19,10 @@ const ChangePassword = () => {
 
     const [passwordError, setPasswordError] = useState("");
 
+    const REACT_APP_API_URL = "https://spring-login-backend.onrender.com/api/v1";
+
+    const LOCAL_HOST = "http://localhost:8000/api/v1/";
+
     // Real-time password mismatch check
     const handleRepeatChange = (value) => {
         setRepeatNewPassword(value);
@@ -77,7 +81,7 @@ const ChangePassword = () => {
 
         try {
             const res = await axios.post(
-                `http://localhost:8000/api/v1/forgotPassword/changePassword/${email}`,
+                `${REACT_APP_API_URL}/forgotPassword/changePassword/${email}`,
                 changePass
             );
 

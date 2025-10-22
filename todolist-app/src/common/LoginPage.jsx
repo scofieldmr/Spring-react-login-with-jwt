@@ -13,6 +13,10 @@ const LoginPage = () => {
   });
   const [apiError, setApiError] = useState("");
 
+  const REACT_APP_API_URL = "https://spring-login-backend.onrender.com/api/v1";
+
+  const LOCAL_HOST = "http://localhost:8000/api/v1/";
+
   function validateForm() {
     let valid = true;
 
@@ -63,7 +67,7 @@ const LoginPage = () => {
       console.log("Username", username);
 
       console.log("Sending loginData:", loginData);
-      const res = await axios.post("http://localhost:8000/api/v1/jwtlogin", loginData);
+      const res = await axios.post(`${REACT_APP_API_URL}/jwtlogin`, loginData);
 
       console.log("Full response:", res);
       console.log("Response data:", res.data);

@@ -13,6 +13,10 @@ const OTPVerify = () => {
 
     const navigator = useNavigate();
 
+      const REACT_APP_API_URL = "https://spring-login-backend.onrender.com/api/v1";
+
+     const LOCAL_HOST = "http://localhost:8000/api/v1/";
+
     function validateForm(){
         let valid = true;
         const errorCopy = {...formErrors};
@@ -43,7 +47,7 @@ const OTPVerify = () => {
 
         try{
             const res = await axios.post(
-                `http://localhost:8000/api/v1/forgotPassword/otp-verify/${email}/${otp}`
+                `${REACT_APP_API_URL}/forgotPassword/otp-verify/${email}/${otp}`
             );
 
             console.log(res.data);

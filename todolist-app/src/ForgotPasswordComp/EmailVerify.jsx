@@ -10,6 +10,10 @@ const EmailVerify = () => {
 
     const navigate = useNavigate();
 
+    const REACT_APP_API_URL = "https://spring-login-backend.onrender.com/api/v1";
+
+    const LOCAL_HOST = "http://localhost:8000/api/v1/";
+
     // Frontend validation
     function validateForm() {
         if (!email.trim()) {
@@ -34,7 +38,7 @@ const EmailVerify = () => {
 
         try {
             const res = await axios.post(
-                `http://localhost:8000/api/v1/forgotPassword/email-verify/${email}`
+                `${REACT_APP_API_URL}/forgotPassword/email-verify/${email}`
             );
 
             console.log(res.data);

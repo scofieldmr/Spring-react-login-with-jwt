@@ -8,9 +8,14 @@ const ProfileDetails = () => {
   const username = localStorage.getItem("username");
   const token = localStorage.getItem("token");
 
+  const REACT_APP_API_URL = "https://spring-login-backend.onrender.com/api/v1";
+
+  const LOCAL_HOST = "http://localhost:8000/api/v1/";
+
+
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/v1/profileDetails", {
+      .get(`${REACT_APP_API_URL}/profileDetails`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setProfile(res.data))
